@@ -2,7 +2,7 @@
 
 Web tools for Mauna Kea Scholars (and others) to allow users to view ESPaDOnS spectra using a web browser
 
-A live copy of this is hosted on github.io, and can be found at [https://heatherflew.github.io/mks_espadons] (https://heatherflew.github.io/mks_espadons/)
+A live copy of this is hosted on github.io, and can be found at [https://heatherflew.github.io/mks_espadons](https://heatherflew.github.io/mks_espadons/)
 
 ## Espadons Spectrum Viewer
 
@@ -20,7 +20,7 @@ There is documentation for this tool here -> [User Guide](https://heatherflew.gi
 
 ESPaDOnS produces data in [fits](https://en.wikipedia.org/wiki/FITS) format, which is a commonly used format in astronomy. If you are a PI of ESPaDOnS, you will also get a link to .s files, which are text files derived from the fits files. An example looks like this:
 
-`
+```
 ***Reduced spectrum of 'HD 225264'
  213831 2
   369.1296  3.5125e-01  2.1221e-01
@@ -29,7 +29,7 @@ ESPaDOnS produces data in [fits](https://en.wikipedia.org/wiki/FITS) format, whi
   369.1366 -1.7128e-02  2.1596e-01
   369.1390  6.0087e-02  2.0024e-01
 ...
-`
+```
 
 The first row is the name of the object observed - in this case, 'HD 225264',
 which will be the name of the object loaded in the ESPaDOnS spectrum viewer.
