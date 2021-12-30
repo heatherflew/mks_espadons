@@ -1,12 +1,12 @@
 # mks_espadons
 
-Web tools for Mauna Kea Scholars (and others) to allow users to view ESPaDOnS spectra using a web browser
+This is a set of web tools for [Mauna Kea Scholars](https://maunakeascholars.com/) (and others) to allow users to view [ESPaDOnS](https://www.cfht.hawaii.edu/Instruments/Spectroscopy/Espadons/) spectra using a web browser. ESPaDOnS is a high-resolution echelle spectrograph and spectropolarimeter and is one of the instruments at [Canada-France-Hawaii Telescope](https://www.cfht.hawaii.edu/).
 
 A live copy of this is hosted on github.io, and can be found at [https://heatherflew.github.io/mks_espadons](https://heatherflew.github.io/mks_espadons/)
 
 ## Espadons Spectrum Viewer
 
-This is a tool that allows the user to load up to 2 ESPaDOnS spectrum .s files and to display and examine the spectrum. It uses only html5, javascript and plotly. It works and has been tested on modern web browsers.  This tool was designed for 2 purposes:
+This is a tool that allows the user to load up to 2 ESPaDOnS spectrum .s files and to display and examine the spectrum. The code for this uses only html5, javascript and plotly, and when hosted on a server, can be accessed using just a browser. It works and has been tested on modern web browsers.  This tool was designed for 2 purposes:
 
 1. Allow high school students an easy way to view ESPaDOnS spectra using only a web browser.
 
