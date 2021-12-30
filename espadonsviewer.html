@@ -1,0 +1,604 @@
+<head>
+	<script src="plotly-2.4.2.min.js"></script>
+	<style>
+	  body {
+	      font-family: Sans-Serif;
+	      font-size: 12px;
+	  }
+	  table, td, th {
+	      border: 1px solid lightgray;
+	      border-spacing: 2px;
+	      font-size: 12px;
+	  }
+	  td {
+	      text-align: left;
+	      vertical-align: top;
+	      font-size: 12px;
+	  }
+	</style>
+</head>
+
+<body>
+  <h1>Espadons Spectrum Viewer</h1><p><br>
+    <table>
+
+      <tr>
+	<td><b>Spectrum 1</b></br>
+	Choose load type:<br>
+  <input type="radio" name="filetype1" id="subsample1" value="subsample" checked><label>subsample - load every 4th point</label><br>
+
+  <input type="radio" name="filetype1" id="subset1" value="subset"><label>subset - &lambda;(nm) [
+   <input type="text" id="submin1" value="400" size="2">
+  , <input type="text" id="submax1" value="600" size="2"> ] </label></br>
+  </p>
+    <button style="display:block; height:20px;" onclick="document.getElementById('file1').click()">
+    Choose your .s file</button>
+    <input type="file" id="file1" name="file1" accept=".s" style="display:none" />
+    <br>
+ <div id="spec1file">File loaded: None</div>
+
+	</td>
+	<td><b>Spectrum 2</b><br>
+	Choose load type:<br>
+  <input type="radio" name="filetype2" id="subsample2" value="subsample" checked><label>subsample - load every 4th point</label><br>
+
+  <input type="radio" name="filetype2" id="subset2" value="subset"><label>subset - &lambda;(nm) [
+   <input type="text" id="submin2" value="400" size="2">
+  , <input type="text" id="submax2" value="600" size="2"> ] </label></br>
+  </p>
+    <button style="display:block; height:20px;" onclick="document.getElementById('file2').click()">
+    Choose your .s file</button>
+    <input type="file" id="file2" name="file2" accept=".s" style="display:none" />
+    <br>
+ <div id="spec2file">File loaded: None</div>
+</p>
+
+
+	</td>
+<td>
+  <b>Documentation</b></br>
+  <p>
+  
+    <button style="display:inline-block; height:20px;" onclick="window.open( 'user_guide.html', '_blank' )">Help</button>
+    <button style="display:inline-block; height:20px;" onclick="window.open( 'about.html', '_blank' )">About</button>
+  </br><p>
+  The buttons above will open info in a new tab.
+</td>
+<td>
+
+ <b>Status: <div id="status" style="color:green">Choose a file to load...</div></b>
+  <p>
+	</td>
+      </tr>
+      <tr>
+	<td rowspan="1" colspan="3"><div id="tester" style="width:800px;height:400px;"></div></td>
+	<td style="width:400px"><center><b>Plot Adjustment Tools</b></center>
+	  <hr>
+	  	  <p style="font-size:12px">
+	  <b>Auto scale axes ranges</b><br>
+	  <button id="autoscaleplot" onclick="autoscaleplot()">Auto Scale Plot</button>
+	  <hr>
+
+	  <p style="font-size:12px">
+	  <b>Manually set axes ranges</b><br>
+	  
+	  xaxis min (nm): <input type="text" id="xaxmin" value="350" size="2"> max (nm): <input type="text" id="xaxmax" value="1100" size="2"></br>
+	  yaxis min : <input type="text" id="yaxmin" value="-0.5" size="2">
+	  yaxis max : <input type="text" id="yaxmax" value="5.0" size="2"></br>
+	  </p>
+	  <p style="color:gray; font-size:12px"> 
+	    Generic presets - xaxis [350,1100] yaxis [-0.5,5] <br>
+	  </p>
+	  <button id="updateplot" onclick="updateplot()">Update Plot</button><br>
+	  <hr>
+	  <b>Show/Hide Spectra</b><br>
+	  <button id="toggles1" onclick="togglespec(1)">Spectrum 1</button>
+	  <button id="toggles2" onclick="togglespec(2)">Spectrum 2</button><br>
+	  <p style="color:gray;">Click these to show/hide each spectrum</p>
+	  <hr>
+	  <p style="font-size:12px">
+	    <b> Adjust Spectrum </b><br>
+	    <table>
+	      <tr>
+		<td><p style="font-size:12px"><b>Spectrum 1</b><br>
+		 scale: <input type="text" id="yscale1" value="1" size="1" width=5>
+		 offset: <input type="text" id="yoffset1" value="0" size="1"><br><p style="color:gray; font-size:12px">
+		 y(new) = y * scale + offset<br> 
+		</td>
+		<td><p style="font-size:12px"><b>Spectrum 2</b><br>
+		    scale: <input type="text" id="yscale2" value="1" size="1" width=5>
+		    offset: <input type="text" id="yoffset2" value="0" size="1"><br><p style="color:gray; font-size:12px">
+		    y(new) = y * scale + offset<br> 
+		</td>
+	      </tr>
+	    </table>
+	    <button id="redrawplot" onclick="redrawplot()">Redraw Plot</button>
+	  
+	</td>
+      </tr>
+
+
+      
+
+
+</tr>
+<tr><td>
+    <center><b>Analysis Tools - Add/Hide Lines</b><br>
+          <button id="hlines" onclick="hlines()">Show Hydrogen</button>
+	  <button id="hlinesoff" onclick="hlinesoff()">Hide Hydrogen</button>
+  </td>
+  <td><center><b>Analysis Tools - Find Local Min</b>
+
+  </td>
+         <td><center><b>Analysis Tools - Find Local Max</b>
+  </td>
+        <td><center><b>Analysis Tools - Add custom vertical line</b>
+	  <p style="font-size:12px">
+	   line (nm): <input type="text" id="line1_x" size="2"> label: <input type="text" id="line1_l" size="2"> <button id="addline1" onclick="addline1()">add</button><button id="removeline1" onclick="removeline1()">remove</button><br>
+	   line (nm): <input type="text" id="line2_x" size="2"> label: <input type="text" id="line2_l" size="2"> <button id="addline2" onclick="addline2()">add</button><button id="removeline2" onclick="removeline2()">remove</button><br>
+	   line (nm): <input type="text" id="line3_x" size="2"> label: <input type="text" id="line3_l" size="2"> <button id="addline3" onclick="addline3()">add</button><button id="removeline3" onclick="removeline3()">remove</button><br>
+	   line (nm): <input type="text" id="line4_x" size="2"> label: <input type="text" id="line4_l" size="2"> <button id="addline4" onclick="addline4()">add</button><button id="removeline4" onclick="removeline4()">remove</button><br>
+
+      </center></td>
+
+
+</tr>
+
+
+</table>
+
+
+<script>
+  var spectrum_name = "";
+  var spectrum_name1 = "";
+  var spectrum_name2 = "";
+  var expected_columns = 0;
+  var expected_rows = 0;
+
+  //first set of data (spectrum 1)
+  const wavelength_arr1 = [500];
+  const intensity_arr1 = [0];
+  const int_arr1 = [];
+  var scale1=1;
+  var offset1=0;
+  var visible1=false;
+
+  //second set of data (spectrum 2)
+  const wavelength_arr2 = [500];
+  const intensity_arr2 = [0];
+  const int_arr2= [];
+  var scale2=1;
+  var offset2=0;
+  var visible2=false;
+  
+  var trace1 = [];
+  var data = [ ];
+  var layout = [ ];
+  var max_intensity=0;
+
+
+  var trace_hline1 = [];
+  var trace_hline2 = [];
+  var trace_hline3 = [];
+  var trace_hline4 = [];
+
+  var trace_uline1 = [];
+  var trace_uline2 = [];
+  var trace_uline3 = [];
+  var trace_uline4 = [];
+
+  
+  
+  function loadTheFile(file,num) {
+      //var file = files.files[0];
+
+      var reader = new FileReader();
+      console.log("opening "+file+" into spectrum "+num);
+
+      // reset the lengths
+
+      var subsampleval=0;
+      var minwave=0;
+      var maxwave=0;
+      if (num ==1 ) {
+	  int_arr1.length=0;
+	  intensity_arr1.length=0;
+	  wavelength_arr1.length=0;
+	  document.getElementById("yscale1").value=1;
+          document.getElementById("yoffset1").value=0;
+	  if (document.getElementById("subsample1").checked) {
+	      subsampleval=1;
+	      console.log ("using subsample");
+	      document.getElementById("spec1file").innerHTML="File: "+file.name+ "  Type: Subsample"
+	  } else {
+	      subsampleval=0;
+	      minwave=document.getElementById("submin1").value;
+	      maxwave=document.getElementById("submax1").value;
+	      if ((maxwave-200)>minwave) {
+		  maxwave=Number(minwave)+200;
+		  document.getElementById("submax2").value=maxwave;
+		  document.getElementById("status").style.color="red";
+		  document.getElementById("status").innerHTML="Out of range, setting range to [ "+minwave+" , "+maxwave+" ]";
+	      } else {
+		  document.getElementById("status").style.color="green";
+		  document.getElementById("status").innerHTML="Set range to [ "+minwave+" , "+maxwave+" ]";
+	      }
+	      document.getElementById("spec1file").innerHTML="File: "+file.name+ "  Type: Subset [ "+minwave+" , "+maxwave +" ]"
+	      console.log ("using subset: [ "+minwave+" , "+maxwave+" ]");
+	      
+	  }
+      } else {
+	  int_arr2.length=0;
+	  intensity_arr2.length=0;
+	  wavelength_arr2.length=0;
+	  document.getElementById("yscale2").value=1;
+          document.getElementById("yoffset2").value=0;
+	  if (document.getElementById("subsample2").checked) {
+	      subsampleval=1;
+	      console.log ("using subsample");
+	      document.getElementById("spec2file").innerHTML="File: "+file.name+ "  Type: Subsample"
+	  } else {
+	      subsampleval=0;
+	      minwave=document.getElementById("submin2").value;
+	      maxwave=document.getElementById("submax2").value;
+	      if ((maxwave-200)>minwave) {
+		  maxwave=Number(minwave)+200;
+		  document.getElementById("submax2").value=maxwave;
+		  document.getElementById("status").style.color="red";
+		  document.getElementById("status").innerHTML="Out of range, setting range to [ "+minwave+" , "+maxwave+" ]";
+	      } else {
+		  document.getElementById("status").style.color="green";
+		  document.getElementById("status").innerHTML="Set range to [ "+minwave+" , "+maxwave+" ]";
+	      }
+	      console.log ("using subset: [ "+minwave+" , "+maxwave+" ]");
+	      document.getElementById("spec2file").innerHTML="File: "+file.name+ "  Type: Subset [ "+minwave+" , "+maxwave +" ]"
+	  }
+      }
+      
+      reader.onload = function(progressEvent){
+	  var lines = this.result.split(/\r\n|\n/);
+	  for(var line = 0; line < lines.length-1; line++){
+	      if (line == 0) {
+		  // the first list has the name of the object
+		  spectrum_name=lines[line].split(/\'/)[1];
+		  if (num==1) {
+		      spectrum_name1=lines[line].split(/\'/)[1];
+		      visible1=true;
+		  } else {
+		      spectrum_name2=lines[line].split(/\'/)[1];
+		      visible2=true;
+		  }
+		  
+	      	console.log(line + " --> "+ lines[line]);
+		console.log(spectrum_name);
+	      } else if (line == 1) {
+		  // the second line has the number of columns and rows
+		  // we first strip the starting white space, and then split it.
+		  var linesplit = lines[line].replace(/^\s+/,"").split(/\s+/);
+		  console.log(lines[line]);
+		  console.log(linesplit[1]);
+		  console.log(linesplit[0]);
+		  
+		  if (linesplit.length==2) {
+		      expected_rows=linesplit[0];
+		      expected_columns=linesplit[1];
+		      console.log("Number of rows expected1: "+expected_rows);
+		      console.log("Number of columns expected1: "+expected_columns);
+		  }
+	      } else {
+		  // if it's not the first or second, we can load!
+		  var linesplit = lines[line].replace(/^\s+/,"").split(/\s+/);
+		  if ( line == 3) {
+		      console.log("number of columns in the 3rd line: "+linesplit.length);
+		  }
+		  if ( linesplit.length == 3) {
+		      if (line == 3 ) {
+			  console.log("adding "+linesplit[0]+ " into wavelength array");
+			  console.log("adding "+linesplit[1]+ " into intensity array");
+		      }
+		  }
+		  // this line is good: has the right number of columns
+		  if (subsampleval == 1) {
+		      if (line %4 == 0) {
+			  if (num==1) {
+			      wavelength_arr1.push(linesplit[0]);
+			      intensity_arr1.push(Number(linesplit[1]));
+			      int_arr1.push(Number(linesplit[1]*scale1+offset1));
+			  } else {
+			      wavelength_arr2.push(linesplit[0]);
+			      intensity_arr2.push(Number(linesplit[1]));
+			      int_arr2.push(Number(linesplit[1]*scale2+offset2));
+			  }
+			  if (Number(linesplit[1])>max_intensity) {
+			      max_intensity=Number(linesplit[1]);
+			  }
+		      }
+		  } else {
+		      if (linesplit[0]>= minwave && linesplit[0]<=maxwave) {
+			  if (num==1) {
+			      wavelength_arr1.push(linesplit[0]);
+			      intensity_arr1.push(Number(linesplit[1]));
+			      int_arr1.push(Number(linesplit[1]*scale1+offset1));
+			  } else {
+			      wavelength_arr2.push(linesplit[0]);
+			      intensity_arr2.push(Number(linesplit[1]));
+			      int_arr2.push(Number(linesplit[1]*scale2+offset2));
+			  }
+			  if (Number(linesplit[1])>max_intensity) {
+			      max_intensity=Number(linesplit[1]);
+			  }
+		      }
+
+		  }
+	      }
+	  }
+	  // needs to go here because of asynchronous problems...
+	  setupThePlot();
+	  // known bug, can't reload the file again.. this is a filereader thing... for now, going to ignore.
+      }
+      reader.readAsText(file);
+      
+
+  }
+
+
+  function setupThePlot() {
+	trace1 = {
+	    name: "Spectrum 1",
+	    x: wavelength_arr1,
+	    y: intensity_arr1,
+	    type: 'scattergl',
+	    mode: 'markers',
+	    color: '#1f77b4',
+	    visible: visible1,
+	    marker: {
+		color: '#1f77b4',
+		size: 2
+	    }
+	};
+      	trace2 = {
+	    name: "Spectrum 2",
+	    x: wavelength_arr2,
+	    y: intensity_arr2,
+	    type: 'scattergl',
+	    mode: 'markers',
+	    visible: visible2,
+	    color: '#ff7f0e',
+	    marker: {
+		color: '#ff7f0e',
+		size: 2
+	    }
+	};
+      
+
+	  //these have to be defined when loading, the max length is based on the max_intensity
+	  
+	  trace_hline1 = { type: 'scatter', x: [656.3,656.3], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+	  trace_hline2 = { type: 'scatter', x: [486.1,486.1], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+	  trace_hline3 = { type: 'scatter', x: [434.1,434.1], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+	  trace_hline4 = { type: 'scatter', x: [410.1,410.1], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+
+// these are the user defined lines, by default not visible. 
+	  trace_uline1 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+	  trace_uline2 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+	  trace_uline3 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+	  trace_uline4 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+
+	  
+      data = [trace1, trace2, trace_hline1, trace_hline2, trace_hline3, trace_hline4, trace_uline1, trace_uline2, trace_uline3, trace_uline4];
+	layout = {
+	    title: spectrum_name,
+	    xaxis: {
+		title: {
+		    text: "Wavelength in nm"
+		}
+	    },
+	    yaxis: {
+		title: {
+		    text: "Intensity"
+		}
+	    },
+	    margin: {
+		l: 40,
+		r: 0,
+		b: 40,
+		t: 40,
+	    },
+	    showlegend: false,
+	    legend: {
+		x: 1,
+		xanchor: 'right',
+		y: 1
+	    },
+
+	    annotations: [
+		{x: 656.3, y: 0, text: 'H alpha', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 486.1, y: 0, text: 'H beta',  textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 434.1, y: 0, text: 'H gamma', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 410.1, y: 0, text: 'H delta', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		
+	    ],
+	    
+	};
+
+      Plotly.newPlot('tester',data, layout);
+  }
+//  document.getElementById('file1').onchange=loadTheFile(this,1);  
+//  document.getElementById('file2').onchange=loadTheFile(this,2);
+
+  document.getElementById('file2').addEventListener('change', (e) => {
+      var file = document.getElementById('file2').files[0];
+      console.log("chose file2 : "+file);
+      loadTheFile(file,2);
+  });
+
+  document.getElementById('file1').addEventListener('change', (e) => {
+      var file = document.getElementById('file1').files[0];
+      console.log("chose file1 : "+file);
+      loadTheFile(file,1);
+  });
+
+  
+  function hlines() {
+      Plotly.restyle('tester', {"visible": true}, [2,3,4,5]);
+      layout["annotations"][0]["visible"]=true;
+      layout["annotations"][1]["visible"]=true;
+      layout["annotations"][2]["visible"]=true;
+      layout["annotations"][3]["visible"]=true;
+      Plotly.relayout('tester', layout );
+  }
+  function hlinesoff() {
+      Plotly.restyle('tester', {"visible": false}, [2,3,4,5]);
+      layout["annotations"][0]["visible"]=false;
+      layout["annotations"][1]["visible"]=false;
+      layout["annotations"][2]["visible"]=false;
+      layout["annotations"][3]["visible"]=false;
+      Plotly.relayout('tester', layout );
+  }
+  function addline1() {
+      var x = Number(document.getElementById("line1_x").value);
+      var l = document.getElementById("line1_l").value;
+      if (x > 300 && x < 1200) {
+      layout["annotations"][4]["visible"]=true;
+      layout["annotations"][4]["text"]=l;
+      layout["annotations"][4]["x"]=x;
+      console.log("in addline1 "+max_intensity);
+      data[6]["x"][0]=x;
+      data[6]["x"][1]=x;
+	  Plotly.update('tester', {"visible": true}, layout, [6]);
+      }
+  }
+    function addline2() {
+      var x = Number(document.getElementById("line2_x").value);
+	var l = document.getElementById("line2_l").value;
+	      if (x > 300 && x < 1200) {
+      layout["annotations"][5]["visible"]=true;
+      layout["annotations"][5]["text"]=l;
+      layout["annotations"][5]["x"]=x;
+      console.log("in addline2 "+max_intensity);
+      data[7]["x"][0]=x;
+      data[7]["x"][1]=x;
+      Plotly.update('tester', {"visible": true}, layout, [7]);
+	      }}
+    function addline3() {
+      var x = Number(document.getElementById("line3_x").value);
+	var l = document.getElementById("line3_l").value;
+	      if (x > 300 && x < 1200) {
+      layout["annotations"][6]["visible"]=true;
+      layout["annotations"][6]["text"]=l;
+      layout["annotations"][6]["x"]=x;
+      console.log("in addline3 "+max_intensity);
+      data[8]["x"][0]=x;
+      data[8]["x"][1]=x;
+      Plotly.update('tester', {"visible": true}, layout, [8]);
+	      }}
+    function addline4() {
+      var x = Number(document.getElementById("line4_x").value);
+	var l = document.getElementById("line4_l").value;
+	      if (x > 300 && x < 1200) {
+      layout["annotations"][7]["visible"]=true;
+      layout["annotations"][7]["text"]=l;
+      layout["annotations"][7]["x"]=x;
+      console.log("in addline4 "+max_intensity);
+      data[9]["x"][0]=x;
+      data[9]["x"][1]=x;
+      Plotly.update('tester', {"visible": true}, layout, [9]);
+	      }}
+
+    function removeline1() {
+      layout["annotations"][4]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [6]);
+    }
+    function removeline2() {
+      layout["annotations"][5]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [7]);
+    }
+    function removeline3() {
+      layout["annotations"][6]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [8]);
+    }
+  function removeline4() {
+      layout["annotations"][7]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [9]);
+  }
+  
+
+  function togglespec(num) {
+      if (num==1 ) {
+	  visible1=!visible1;
+	  Plotly.update('tester', {"visible": visible1}, layout, [0]);
+	  
+      } else {
+	  visible2=!visible2;
+	  Plotly.update('tester', {"visible": visible2}, layout, [1]);
+      }
+
+      
+     // Plotly.update('tester', {"visible": true}, layout, [1]);
+      
+  }
+  
+  function updateplot() {
+      var xaxmin = Number(document.getElementById("xaxmin").value);
+      var xaxmax = Number(document.getElementById("xaxmax").value);
+      var yaxmin = Number(document.getElementById("yaxmin").value);
+      var yaxmax = Number(document.getElementById("yaxmax").value);
+      console.log(xaxmin);
+      console.log(xaxmax);
+      
+      var update = {
+	  'xaxis.range': [xaxmin, xaxmax],   // updates the xaxis range
+	  'yaxis.range': [yaxmin, yaxmax],     // updates the end of the yaxis range
+      }
+
+      // do error checking here?
+      Plotly.relayout('tester', update);
+      document.getElementById("status").style.color="green";
+      document.getElementById("status").innerHTML="Replotted with user defined axes... Ready!";
+  }
+
+  function autoscaleplot() {
+      var update = {
+	  'xaxis.autorange': true,
+	  'yaxis.autorange': true
+	  
+      }
+      Plotly.relayout('tester', update);
+      document.getElementById("status").style.color="red";
+            document.getElementById("status").style.color="green";
+      document.getElementById("status").innerHTML="Replotted with auto defined axes... Ready!";
+  }
+
+  function redrawplot() {
+      // grab the numbers from the fields
+      // also add in the second line when I have that
+
+      scale1=Number(document.getElementById("yscale1").value);
+      offset1=Number(document.getElementById("yoffset1").value);
+      console.log("yscale1="+scale1);
+      console.log("yoffset1="+offset1);
+      // This is really painful but I don't know a better way to do this
+      for(var i=0; i<intensity_arr1.length; i++) {
+	  int_arr1[i]=intensity_arr1[i]*scale1+offset1;
+      }
+
+
+      scale2=Number(document.getElementById("yscale2").value);
+      offset2=Number(document.getElementById("yoffset2").value);
+      for(var i=0; i<intensity_arr2.length; i++) {
+	  int_arr2[i]=intensity_arr2[i]*scale2+offset2;
+      }
+      
+      data[0]["y"]=int_arr1;
+      data[1]["y"]=int_arr2;
+      Plotly.update('tester', {}, layout, [0,1]);
+     // Plotly.update('tester', {"visible": true}, layout, [1]);
+      
+      
+  }
+  </script>
+</body>

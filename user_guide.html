@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+	font-family: Sans-Serif;
+    }
+  </style>
+</head>
+
+
+<body>
+<h1>Espadons Spectrum Viewer - User Guide </h1>
+
+This tool allows you to open .s files from Espadons, zoom/pan around to view the spectrum, and provides basic analysis tools as well.  This tool is designed to run in a web browser, so that the user does not need to install special astronomy software - it should work in any modern browser, and uses html5 and javascript.
+
+<h3>Contents</h3>
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#open">Opening Files</a></li>
+<li><a href="#spectrumplot">The interactive spectrum plot</a></li>
+<li><a href="#plotparams">Choosing the plot parameters</a></li>
+<ul>
+<li><a href="#plotparamsautoscale">Auto Scale</a></li>
+<li><a href="#plotparamssetaxes">Manually Set axes ranges</a></li>
+<li><a href="#plotparamsshowspectra">Show/Hide Spectra</a></li>
+<li><a href="#plotparamsadjust">Adjust Spectrum</a></li>
+</ul>
+<li><a href="#analysis">Analysis Tools</a></li>
+<ul>
+  <li><a href="#analysiscustom">Analysis Tools - add custom lines</a></li>
+  <li><a href="#analysishydrogen">Analysis Tools - add Hydrogen lines</a></li>
+  <li><a href="#analysisredshift">Analysis Tools - adjust redshift of the lines</a></li>
+  <li><a href="#analysisminmax">Analysis Tools - calculate min/max intensity</a></li>
+  <li><a href="#analysisfwhm">Analysis Tools - calculate Full width Half Max/Min</a></li>
+  <li><a href="#analysisew">Analysis Tools - calculate equivalent width</a></li>
+</ul>
+</li><a href="#quirks">Known Quirks and Bugs</a></li>
+</ul>
+  <hr>
+
+
+<h3><a name="intro"></a>Introduction</h3>
+
+<h4>Espadons Instrument</h4>
+<h4>Espadons Data Products</h4>
+
+<h3><a name="open"></a>Opening Files</h3>
+
+The first step to using this tool is to open a file. There are 3 difference sources of files.
+<ul>
+    <li>You can load a spectrum (.s) file directly from your computer</li>
+    <li>You can provide a URL of a spectrum  (.s) file (example: )</li>
+    <li>You can click on one of the provided examples ( ), to explore the tool prior to using your own data.</li>
+</ul>
+
+There are a couple of options on how to load a file, as well. This is due to the limitations of loading large sets of data within the browser.  A typical espadons file has roughly 250k points in the spectrum, which dramatically slows down the browser when all are loaded.  To mitigate this, we have 2 options.
+
+<ul>
+    <li>Subsample - This loads every 4th point in the file.  It should cover the full range of wavelengths, and likely for most, this will be sufficient.</li>
+
+    <li>Full Resolution Subset - This will load every point between a min and max value of the wavelength, for full resolution over that range.  If the range of wavelengths is greater than 200nm, it is restricted to between wavelength(min) and wavelength(min)+200.  This is useful if it is needed to zoom in closely to a narrow range of wavelengths.</li>
+</ul>
+
+When opening a file, you can choose either to open a subsample or a full resolution subset. These options are available whether it is a local file you provide, one from a URL, or one of the example files provided in the tool.
+
+Once you chose the type (subsample or subset), and choose the .s file to load, it will load the .s file and plot it using autoscales. Also, below the choose your .s file button, it will display the filename loaded.
+
+NOTE! If you change subsaple or subset, you will need to reload the file, this does not happen automatically.
+
+You can choose to load up to 2 spectrums (one in Spectrum 1, and another in Spectrum 2).
+
+<h3><a name="spectrumplot">The interactive spectrum plot</a></h3>
+
+The interactive spectrum plot has a number of buttons available once you mouse over the plot. These buttons are located in the upper right of the plot, and they are:
+
+Save image
+Zoom
+Pan
+Box Select
+Lasso
+Zoom in
+Zoom out
+Auto scale
+Reset axes
+and a button giving more information about the plotly graphing utility.
+
+Mousing over the points on the spectrum will give the x,y coordinates of the current point. You can also click and drag a box shape to zoom in to your area of interest.
+
+<h3><a name="plotparams">Choosing the plot parameters</a></h3>
+
+There are several ways to adjust the plots using the Plot Ajustment tools.
+
+
+
+<h3><a name="analysis">Analysis Tools</a></h3>
+
+
+<h4><a name="analysiscustom">Analysis Tools - add custom lines</a></h4>
+
+<h4><a name="analysishydrogen">Analysis Tools - add Hydrogen lines</a></h4>
+
+<h4><a name="analysisredshift">Analysis Tools - adjust redshift of the lines</a></h4>
+
+<h4><a name="analysisminmax">Analysis Tools - calculate min/max intensity</a></h4>
+
+<h4><a name="analysisfwhm">Analysis Tools - calculate Full width Half Max/Min</a></h4>
+
+<h4><a name="analysisew">Analysis Tools - calculate equivalent Width</a></h4>
+
+<h3><a name="quirks">Known Quirks and Bugs</a></h3>
+
+
+</body>
+</html>
