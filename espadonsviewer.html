@@ -75,13 +75,13 @@
 	<td style="width:400px"><center><b>Plot Adjustment Tools</b></center>
 	  <hr>
 	  	  <p style="font-size:12px">
-	  <b>Auto scale axes ranges</b><br>
+	  <b>Auto scale axes ranges</b><br><p>
 	  <button id="autoscaleplot" onclick="autoscaleplot()">Auto Scale Plot</button>
 	  <hr>
 
 	  <p style="font-size:12px">
 	  <b>Manually set axes ranges</b><br>
-	  
+	  <p>
 	  xaxis min (nm): <input type="text" id="xaxmin" value="350" size="2"> max (nm): <input type="text" id="xaxmax" value="1100" size="2"></br>
 	  yaxis min : <input type="text" id="yaxmin" value="-0.5" size="2">
 	  yaxis max : <input type="text" id="yaxmax" value="5.0" size="2"></br>
@@ -91,13 +91,14 @@
 	  </p>
 	  <button id="updateplot" onclick="updateplot()">Update Plot</button><br>
 	  <hr>
-	  <b>Show/Hide Spectra</b><br>
+	  <b>Show/Hide Spectra</b><br><p>
 	  <button id="toggles1" onclick="togglespec(1)">Spectrum 1</button>
 	  <button id="toggles2" onclick="togglespec(2)">Spectrum 2</button><br>
 	  <p style="color:gray;">Click these to show/hide each spectrum</p>
 	  <hr>
 	  <p style="font-size:12px">
 	    <b> Adjust Spectrum </b><br>
+	    <p>
 	    <table>
 	      <tr>
 		<td><p style="font-size:12px"><b>Spectrum 1</b><br>
@@ -124,13 +125,29 @@
 </tr>
 <tr><td>
     <center><b>Analysis Tools - Add/Hide Lines</b><br>
+      <br>
           <button id="hlines" onclick="hlines()">Show Hydrogen</button>
 	  <button id="hlinesoff" onclick="hlinesoff()">Hide Hydrogen</button>
   </td>
   <td><center><b>Analysis Tools - Find Local Min</b>
+      <br><p>
+	  min (nm): <input type="text" id="minaxmin" value="350" size="2"> max (nm): <input type="text" id="minaxmax" value="1100" size="2"></br>
+	  <p style="color:gray; font-size:12px"> 
+	  <button id="findlocalmin" onclick="findlocalmin()">Find Local Min</button><br><p>
+	  <div id="localmin"></div>
 
+
+      
   </td>
-         <td><center><b>Analysis Tools - Find Local Max</b>
+<td><center><b>Analysis Tools - Find Local Max</b>
+          <br><p>
+	  min (nm): <input type="text" id="maxaxmin" value="350" size="2"> max (nm): <input type="text" id="maxaxmax" value="1100" size="2"></br>
+	  <p style="color:gray; font-size:12px"> 
+	  <button id="findlocalmax" onclick="findlocalmax()">Find Local Max</button><br><p>
+	  <div id="localmax"></div>
+
+
+
   </td>
         <td><center><b>Analysis Tools - Add custom vertical line</b>
 	  <p style="font-size:12px">
@@ -138,6 +155,10 @@
 	   line (nm): <input type="text" id="line2_x" size="2"> label: <input type="text" id="line2_l" size="2"> <button id="addline2" onclick="addline2()">add</button><button id="removeline2" onclick="removeline2()">remove</button><br>
 	   line (nm): <input type="text" id="line3_x" size="2"> label: <input type="text" id="line3_l" size="2"> <button id="addline3" onclick="addline3()">add</button><button id="removeline3" onclick="removeline3()">remove</button><br>
 	   line (nm): <input type="text" id="line4_x" size="2"> label: <input type="text" id="line4_l" size="2"> <button id="addline4" onclick="addline4()">add</button><button id="removeline4" onclick="removeline4()">remove</button><br>
+	   line (nm): <input type="text" id="line5_x" size="2"> label: <input type="text" id="line5_l" size="2"> <button id="addline5" onclick="addline5()">add</button><button id="removeline5" onclick="removeline5()">remove</button><br>
+	   line (nm): <input type="text" id="line6_x" size="2"> label: <input type="text" id="line6_l" size="2"> <button id="addline6" onclick="addline6()">add</button><button id="removeline6" onclick="removeline6()">remove</button><br>
+	   line (nm): <input type="text" id="line7_x" size="2"> label: <input type="text" id="line7_l" size="2"> <button id="addline7" onclick="addline7()">add</button><button id="removeline7" onclick="removeline7()">remove</button><br>
+	   line (nm): <input type="text" id="line8_x" size="2"> label: <input type="text" id="line8_l" size="2"> <button id="addline8" onclick="addline8()">add</button><button id="removeline8" onclick="removeline8()">remove</button><br>
 
       </center></td>
 
@@ -186,6 +207,10 @@
   var trace_uline2 = [];
   var trace_uline3 = [];
   var trace_uline4 = [];
+  var trace_uline5 = [];
+  var trace_uline6 = [];
+  var trace_uline7 = [];
+  var trace_uline8 = [];
 
   
   
@@ -382,10 +407,14 @@
 	  trace_uline1 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
 	  trace_uline2 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
 	  trace_uline3 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
-	  trace_uline4 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+      trace_uline4 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+      trace_uline5 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+      trace_uline6 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+      trace_uline7 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
+      trace_uline8 = { type: 'scatter', x: [0,0], y: [0,max_intensity*1.08], mode: 'lines', line: { dash: 'dot', width: 1, color: 'gray'}, visible: false };
 
 	  
-      data = [trace1, trace2, trace_hline1, trace_hline2, trace_hline3, trace_hline4, trace_uline1, trace_uline2, trace_uline3, trace_uline4];
+      data = [trace1, trace2, trace_hline1, trace_hline2, trace_hline3, trace_hline4, trace_uline1, trace_uline2, trace_uline3, trace_uline4, trace_uline5, trace_uline6, trace_uline7, trace_uline8];
 	layout = {
 	    title: spectrum_name,
 	    xaxis: {
@@ -416,6 +445,10 @@
 		{x: 486.1, y: 0, text: 'H beta',  textangle: -90, showarrow: false, yanchor: "top", visible: false},
 		{x: 434.1, y: 0, text: 'H gamma', textangle: -90, showarrow: false, yanchor: "top", visible: false},
 		{x: 410.1, y: 0, text: 'H delta', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
+		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
 		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
 		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
 		{x: 0, y: 0, text: '', textangle: -90, showarrow: false, yanchor: "top", visible: false},
@@ -485,28 +518,78 @@
       Plotly.update('tester', {"visible": true}, layout, [7]);
 	      }}
     function addline3() {
-      var x = Number(document.getElementById("line3_x").value);
+	var x = Number(document.getElementById("line3_x").value);
 	var l = document.getElementById("line3_l").value;
-	      if (x > 300 && x < 1200) {
-      layout["annotations"][6]["visible"]=true;
-      layout["annotations"][6]["text"]=l;
-      layout["annotations"][6]["x"]=x;
-      console.log("in addline3 "+max_intensity);
-      data[8]["x"][0]=x;
-      data[8]["x"][1]=x;
-      Plotly.update('tester', {"visible": true}, layout, [8]);
-	      }}
+	if (x > 300 && x < 1200) {
+	    layout["annotations"][6]["visible"]=true;
+	    layout["annotations"][6]["text"]=l;
+	    layout["annotations"][6]["x"]=x;
+	    console.log("in addline3 "+max_intensity);
+	    data[8]["x"][0]=x;
+	    data[8]["x"][1]=x;
+	    Plotly.update('tester', {"visible": true}, layout, [8]);
+	}
+    }
     function addline4() {
-      var x = Number(document.getElementById("line4_x").value);
+	var x = Number(document.getElementById("line4_x").value);
 	var l = document.getElementById("line4_l").value;
+	if (x > 300 && x < 1200) {
+	    layout["annotations"][7]["visible"]=true;
+	    layout["annotations"][7]["text"]=l;
+	    layout["annotations"][7]["x"]=x;
+	    console.log("in addline4 "+max_intensity);
+	    data[9]["x"][0]=x;
+	    data[9]["x"][1]=x;
+	    Plotly.update('tester', {"visible": true}, layout, [9]);
+	}
+    }
+  function addline5() {
+      var x = Number(document.getElementById("line5_x").value);
+	var l = document.getElementById("line5_l").value;
 	      if (x > 300 && x < 1200) {
-      layout["annotations"][7]["visible"]=true;
-      layout["annotations"][7]["text"]=l;
-      layout["annotations"][7]["x"]=x;
-      console.log("in addline4 "+max_intensity);
-      data[9]["x"][0]=x;
-      data[9]["x"][1]=x;
-      Plotly.update('tester', {"visible": true}, layout, [9]);
+      layout["annotations"][8]["visible"]=true;
+      layout["annotations"][8]["text"]=l;
+      layout["annotations"][8]["x"]=x;
+      console.log("in addline5 "+max_intensity);
+      data[10]["x"][0]=x;
+      data[10]["x"][1]=x;
+      Plotly.update('tester', {"visible": true}, layout, [10]);
+	      }}
+      function addline6() {
+      var x = Number(document.getElementById("line6_x").value);
+	var l = document.getElementById("line6_l").value;
+	      if (x > 300 && x < 1200) {
+      layout["annotations"][9]["visible"]=true;
+      layout["annotations"][9]["text"]=l;
+      layout["annotations"][9]["x"]=x;
+      console.log("in addline6 "+max_intensity);
+      data[11]["x"][0]=x;
+      data[11]["x"][1]=x;
+      Plotly.update('tester', {"visible": true}, layout, [11]);
+	      }}
+      function addline7() {
+      var x = Number(document.getElementById("line7_x").value);
+	var l = document.getElementById("line7_l").value;
+	      if (x > 300 && x < 1200) {
+      layout["annotations"][10]["visible"]=true;
+      layout["annotations"][10]["text"]=l;
+      layout["annotations"][10]["x"]=x;
+      console.log("in addline7 "+max_intensity);
+      data[12]["x"][0]=x;
+      data[12]["x"][1]=x;
+      Plotly.update('tester', {"visible": true}, layout, [12]);
+	      }}
+      function addline8() {
+      var x = Number(document.getElementById("line8_x").value);
+	var l = document.getElementById("line8_l").value;
+	      if (x > 300 && x < 1200) {
+      layout["annotations"][11]["visible"]=true;
+      layout["annotations"][11]["text"]=l;
+      layout["annotations"][11]["x"]=x;
+      console.log("in addline8 "+max_intensity);
+      data[13]["x"][0]=x;
+      data[13]["x"][1]=x;
+      Plotly.update('tester', {"visible": true}, layout, [13]);
 	      }}
 
     function removeline1() {
@@ -525,6 +608,23 @@
       layout["annotations"][7]["visible"]=false;
       Plotly.update('tester', {"visible": false}, layout, [9]);
   }
+  function removeline5() {
+      layout["annotations"][8]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [10]);
+  }
+    function removeline6() {
+      layout["annotations"][9]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [11]);
+    }
+    function removeline7() {
+      layout["annotations"][10]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [12]);
+    }
+    function removeline8() {
+      layout["annotations"][11]["visible"]=false;
+      Plotly.update('tester', {"visible": false}, layout, [13]);
+  }
+  
   
 
   function togglespec(num) {
@@ -541,6 +641,165 @@
      // Plotly.update('tester', {"visible": true}, layout, [1]);
       
   }
+
+  function findlocalmin() {
+      
+      var minaxmin= Number(document.getElementById("minaxmin").value);
+      var minaxmax= Number(document.getElementById("minaxmax").value);
+      var first_arr1=1;
+      var first_arr2=1;
+      var valid_1=0;
+      var valid_2=0;
+      var min_i_1=0;
+      var min_i_2=0; //index of min 
+      for(var i=0; i<wavelength_arr1.length; i++) {
+	if (wavelength_arr1[i] >= minaxmin && wavelength_arr1[i] <= minaxmax) {
+	    if (first_arr1==1) {
+		first_arr1=0;
+		min_i_1=i;
+	    }
+	    if (int_arr1[min_i_1]>int_arr1[i]) {
+		min_i_1=i;
+		valid_1=1;
+	    }
+	}
+      }
+
+            for(var i=0; i<wavelength_arr2.length; i++) {
+	if (wavelength_arr2[i] >= minaxmin && wavelength_arr2[i] <= minaxmax) {
+
+	    if (first_arr2==1) {
+		first_arr2=0;
+		min_i_2=i;
+	    }
+	    if (int_arr2[min_i_2]>int_arr2[i]) {
+		min_i_2=i;
+		valid_2=1;		
+	    }
+	}
+      }
+
+
+      
+      //wavelength_arr1
+      //intensity_arr1
+      var spec1_str="";
+      var spec2_str="";
+      var spec1_tbl="";
+      var spec2_tbl="";
+
+      if (valid_1==1) {
+	  spec1_str="<br>Spec1 min at <br>wavelength: "+
+	      wavelength_arr1[min_i_1]+" intensity: "+int_arr1[min_i_1];
+	  spec1_tbl="<tr><td>Spec 1</td><td>"+wavelength_arr1[min_i_1]+
+	      "</td><td>"+int_arr1[min_i_1]+"</td></tr>";	  
+      }
+
+      if (valid_2==1) {
+	  spec2_str="<br>Spec2 min at <br>wavelength: "+
+	      wavelength_arr2[min_i_2]+" intensity: "+int_arr2[min_i_2];
+	  spec2_tbl="<tr><td>Spec 2</td><td>"+wavelength_arr2[min_i_2]+
+	      "</td><td>"+int_arr2[min_i_2]+"</td></tr>";
+      }
+      
+      document.getElementById("localmin").innerHTML=
+	  "Looking for min in x range ["+ minaxmin+","+minaxmax+
+	  //"]"+ spec1_str+spec2_str;
+      "] <br><p><table><tr><th></th><th>wavelength(nm)</th><th>intensity</th></tr>"+spec1_tbl+spec2_tbl+"</table>";
+
+      
+//      document.getElementById("localmin").innerHTML=
+//	  "Looking for min in x range ["+ minaxmin+","+minaxmax+
+//	  "]"+ spec1_str+spec2_str;
+
+      //wavelength_arr1[min_i_1]+" intensity: "+int_arr1[min_i_1] +
+//	  "<br>Spec2 min at wavelength: " +
+//	  wavelength_arr1[min_i_2]+" intensity: "+int_arr1[min_i_2];
+
+      
+  }
+
+
+  function findlocalmax() {
+      
+      var maxaxmin= Number(document.getElementById("maxaxmin").value);
+      var maxaxmax= Number(document.getElementById("maxaxmax").value);
+      var first_arr1=1;
+      var first_arr2=1;
+      var valid_1=0;
+      var valid_2=0;
+      var max_i_1=0;
+      var max_i_2=0; //index of min 
+      for(var i=0; i<wavelength_arr1.length; i++) {
+	if (wavelength_arr1[i] >= maxaxmin && wavelength_arr1[i] <= maxaxmax) {
+	    // in the correct wl range
+	    //	    console.log("wavelength "+wavelength_arr1[i]+" intensity "+int_arr1[i]);
+	    
+	    if (first_arr1==1) {
+		first_arr1=0;
+		max_i_1=i;
+	    }
+	    if (int_arr1[max_i_1]<int_arr1[i]) {
+		valid_1=1;
+		max_i_1=i;
+//		console.log(min_i_1);
+	    }
+	}
+      }
+
+      //now do the same for spec 2
+            for(var i=0; i<wavelength_arr2.length; i++) {
+	if (wavelength_arr2[i] >= maxaxmin && wavelength_arr2[i] <= maxaxmax) {
+	    // in the correct wl range
+	    //	    console.log("wavelength "+wavelength_arr1[i]+" intensity "+int_arr1[i]);
+
+	    if (first_arr2==1) {
+		first_arr2=0;
+		max_i_2=i;
+	    }
+	    if (int_arr2[max_i_2]<int_arr2[i]) {
+		max_i_2=i;
+		valid_2=1;		
+//		console.log(min_i_1);
+	    }
+	}
+      }
+
+
+      
+      //wavelength_arr1
+      //intensity_arr1
+      var spec1_str="";
+      var spec2_str="";
+      var spec1_tbl="";
+      var spec2_tbl="";
+      if (valid_1==1) {
+	  spec1_str="<br>Spec1 max at <br>wavelength: "+
+	      wavelength_arr1[max_i_1]+" intensity: "+int_arr1[max_i_1];
+	  	  spec1_tbl="<tr><td>Spec 1</td><td>"+wavelength_arr1[max_i_1]+
+	      "</td><td>"+int_arr1[max_i_1]+"</td></tr>";
+      }
+
+      if (valid_2==1) {
+	  spec2_str="<br>Spec2 max at <br>wavelength: "+
+	      wavelength_arr2[max_i_2]+" intensity: "+int_arr2[max_i_2];
+	  spec2_tbl="<tr><td>Spec 2</td><td>"+wavelength_arr2[max_i_2]+
+	      "</td><td>"+int_arr2[max_i_2]+"</td></tr>";
+      }
+      
+      document.getElementById("localmax").innerHTML=
+	  "Looking for max in x range ["+ maxaxmin+","+maxaxmax+
+	  //"]"+ spec1_str+spec2_str;
+      "] <br><p><table><tr><th></th><th>wavelength(nm)</th><th>intensity</th></tr>"+spec1_tbl+spec2_tbl+"</table>";
+      //wavelength_arr1[min_i_1]+" intensity: "+int_arr1[min_i_1] +
+//	  "<br>Spec2 min at wavelength: " +
+//	  wavelength_arr1[min_i_2]+" intensity: "+int_arr1[min_i_2];
+
+      
+  }
+
+  
+
   
   function updateplot() {
       var xaxmin = Number(document.getElementById("xaxmin").value);
@@ -558,7 +817,7 @@
       // do error checking here?
       Plotly.relayout('tester', update);
       document.getElementById("status").style.color="green";
-      document.getElementById("status").innerHTML="Replotted with user defined axes... Ready!";
+      document.getElementById("status").innerHTML="Replotted with user defined axes... Ready!";     
   }
 
   function autoscaleplot() {
