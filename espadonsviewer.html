@@ -19,7 +19,13 @@
 </head>
 
 <body>
-  <h1>Espadons Spectrum Viewer</h1><p><br>
+  <table style="border:none">
+    <tr style="border:none">
+      <td style="border:none">
+	<img src="cfht-blue-official_logo.gif" width="50px"></td>
+      <td style="vertical-align:bottom; height:68px; border:none"><p style="font-size:46px;color:blue"><b>ESPaDOnS Spectrum Viewer</b></p>
+</tr>
+      </table>
     <table>
 
       <tr>
@@ -36,7 +42,7 @@
     <input type="file" id="file1" name="file1" accept=".s" style="display:none" />
     <br>
  <div id="spec1file">File loaded: None</div>
-
+    <div id="spec1file2">Description: None</div>  
 	</td>
 	<td><b>Spectrum 2</b><br>
 	Choose load type:<br>
@@ -50,7 +56,8 @@
     Choose your .s file</button>
     <input type="file" id="file2" name="file2" accept=".s" style="display:none" />
     <br>
- <div id="spec2file">File loaded: None</div>
+    <div id="spec2file">File loaded: None</div>
+    <div id="spec2file2">Description: None</div>
 </p>
 
 
@@ -213,7 +220,6 @@
   var trace_uline8 = [];
 
   
-  
   function loadTheFile(file,num) {
       //var file = files.files[0];
 
@@ -234,7 +240,7 @@
 	  if (document.getElementById("subsample1").checked) {
 	      subsampleval=1;
 	      console.log ("using subsample");
-	      document.getElementById("spec1file").innerHTML="File: "+file.name+ "  Type: Subsample"
+	      document.getElementById("spec1file").innerHTML="File: "+file.name+ "  Type: Subsample";
 	  } else {
 	      subsampleval=0;
 	      minwave=document.getElementById("submin1").value;
@@ -248,7 +254,7 @@
 		  document.getElementById("status").style.color="green";
 		  document.getElementById("status").innerHTML="Set range to [ "+minwave+" , "+maxwave+" ]";
 	      }
-	      document.getElementById("spec1file").innerHTML="File: "+file.name+ "  Type: Subset [ "+minwave+" , "+maxwave +" ]"
+	      document.getElementById("spec1file").innerHTML="File: "+file.name+ "  Type: Subset [ "+minwave+" , "+maxwave +" ]";
 	      console.log ("using subset: [ "+minwave+" , "+maxwave+" ]");
 	      
 	  }
@@ -261,7 +267,7 @@
 	  if (document.getElementById("subsample2").checked) {
 	      subsampleval=1;
 	      console.log ("using subsample");
-	      document.getElementById("spec2file").innerHTML="File: "+file.name+ "  Type: Subsample"
+	      document.getElementById("spec2file").innerHTML="File: "+file.name+ "  Type: Subsample";
 	  } else {
 	      subsampleval=0;
 	      minwave=document.getElementById("submin2").value;
@@ -276,7 +282,7 @@
 		  document.getElementById("status").innerHTML="Set range to [ "+minwave+" , "+maxwave+" ]";
 	      }
 	      console.log ("using subset: [ "+minwave+" , "+maxwave+" ]");
-	      document.getElementById("spec2file").innerHTML="File: "+file.name+ "  Type: Subset [ "+minwave+" , "+maxwave +" ]"
+	      document.getElementById("spec2file").innerHTML="File: "+file.name+ "  Type: Subset [ "+minwave+" , "+maxwave +" ]";
 	  }
       }
       
@@ -289,9 +295,11 @@
 		  if (num==1) {
 		      spectrum_name1=lines[line].split(/\'/)[1];
 		      visible1=true;
+		      document.getElementById("spec1file2").innerHTML="Description: "+spectrum_name1;
 		  } else {
 		      spectrum_name2=lines[line].split(/\'/)[1];
 		      visible2=true;
+		      document.getElementById("spec2file2").innerHTML="Description: "+spectrum_name2;
 		  }
 		  
 	      	console.log(line + " --> "+ lines[line]);
@@ -860,4 +868,10 @@
       
   }
   </script>
+Copyright 2021-2022 Heather Flewelling.  Licensed under <a href="COPYING">GNU GPLv3</a>. Download the source <a href="https://github.com/heatherflew/mks_espadons">here</a><br>
+
+View the CFHT User's Meeting 2022 poster <a href="poster/CFHT_poster.html">here</a>
+
+
+
 </body>
