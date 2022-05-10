@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+body {
+font-family: Arial, sans-serif;
+font-size:11px;
+
+}
+ul {
+padding-left: 15px;
+}
+ol {
+padding-left: 15px;
+}
+.item1 { grid-area: header; }
+.item2 { grid-area: menu; }
+.item3 { grid-area: main; }
+.item4 { grid-area: right; }
+.item6 { grid-area: menu2; }
+.item8 { grid-area: right3; }
+.item7 { grid-area: right2; }
+.item5 { grid-area: footer; }
+
+.grid-container {
+display: grid;
+grid-template-columns: auto auto auto;
+  grid-template-areas:
+      'header header'
+	  'menu menu'
+    'main right3'
+    'right right2'
+    'footer footer';
+  grid-gap: 5px;
+  background-color: #2196F3;
+padding: 5px;
+width: 1195px;
+font-size:11px;
+}
+
+.grid-container > div {
+background-color: rgba(255, 255, 255, 0.8);
+text-align: left;
+padding: 0px 0;
+font-size:11px;
+}
+</style>
+</head>
+<body>
+<div class="grid-container">
+  <div class="item1">
+    <h2>CFHT data analysis in a web browser - webtools for the Mauna Kea Scholars program
+    </h2><p>
+    <b>Heather Flewelling</b> (heather@cfht.hawaii.edu), <b>Mary Beth Laychak</b>, <b>Nadine Manset</b> --  Canada-France-Hawaii Telescope 
+    <br>
+    Best viewed on a laptop / full screen, or download the <a href="cfht_um2022.pdf">pdf</a> or  <a href="cfht_um2022.png">png</a>
+  </div>
+  <div class="item2"><b>Abstract</b><br><br>
+The Mauna Kea Scholars program ( <a href="https://maunakeascholars.com/">https://maunakeascholars.org</a>, see also Manset's poster: <a href="https://www.cfht.hawaii.edu/~manset/UM2022/UM2022-MKS-Manset.html">https://www.cfht.hawaii.edu/~manset/UM2022/UM2022-MKS-Manset.html</a>), started in 2015, provides research opportunities for high school students in Hawai'i to use the telescopes on
+Mauna Kea. These students work with astronomy mentors (mostly graduate students, but also astronomers working with the observatories), to write proposals for telescope time.<br><p>
+Over 100 students have received telescope time since the start of the program.
+It is a steep learning curve to learn how to analyze astronomical data, often requiring specialized software and a background in programming. These skills are often needed even for
+very basic tasks such as opening a fits file or viewing a spectra, and can act as a barrier to high school students who have an interest in science but do not yet have the computer
+background. Another barrier is that many of the students have chromebooks, which makes it impossible to run typical astronomy software. We have created a couple of webtools to
+make CFHT's data more accessible to high school students. These tools are written in html5 and javascript, and can be easily viewed on chromebooks and mobile devices.<br><p>
+For images, we have a 'colorizer' that allows one to create color images using a preset collection of different fields observed in different filters, for a set of publicly available Pan-
+STARRS images and CFHT MegaCam images. The mentor can clone the github page and change the images to use the student's telescope images, making this a very simplified
+way to view FITS files. The student can pan and zoom the images, choose the filters to view, and adjust the intensity, and also create color images.
+<br><p>
+    For students interested in exploring CFHT ESPaDOnS spectra, we have a javascript webtool that allows one to load up to 2 spectra, and to examine (pan, zoom, scale) the spectra.
+The student can find the min, max for a set range, and overlay known spectral lines for Hydrogen and other elements.
+<br><p>
+Both of these webtools are written in html5 and javascript, and can be used with any modern browser. These tools work on mobile devices as well as on chromebooks. They are
+hosted on github to make it easy to clone/modify, and have a GPL3 license. They can be found at <a href="https://www.cfht.hawaii.edu/~heather/">https://www.cfht.hawaii.edu/~heather</a>
+
+<!--
+    A frequently asked question when doing outreach is “how do astronomers make color
+images?”. The answer to this involves explaining how color images are created (with R/G/B channels), as
+well as explaining that telescope images are essentially black and white, and often not observed in
+wavelengths that the human eye can see. Trying to explain how astronomers make color images, with all
+the knobs and dials present in ds9 is quite hard, so I created a very simplified tool to demonstrate how
+to make a color image. This tool was designed to allow anyone to make their own color images, using a
+selected subset of data. It uses html5 and javascript, and can be loaded on a computer or a mobile
+device. It allows the user to select an area of sky (for example: the horsehead nebula), to assign the
+different filters to R/G/B channels in the image, and then to adjust the intensity of those channels, to
+create a color image. There are currently 2 versions, one for a subset of Pan-STARRS images, and
+another for a subset of CFHT MegaCam images.
+-->
+
+  </div>
+  <div class="item3"><b>The MegaCam Colorizer - easily view MegaCam Images</b><br><br>
+    <img src="megacam_screenshot.png" alt="a screenshot of the megacam colorizer program" width=590><br>
+
+    <table style="width:100%">
+      <tr>
+	<td>
+    <b>4 easy steps</b>
+    <ol>
+      <li>Select the set of images </li>
+      <li>Assign color filters to R/G/B channels </li>
+      <li>Adjust the intensity of each R/G/B channel </li>
+      <li>Zoom and pan around to get a nice view</li>
+    </ol>
+</td>
+	<td>
+	  <b>Features</b><br>
+	  <ul>
+	    <li>Curated set of images</li>
+	    <li>Sensible default image intensities</li>
+	    <li>Easy to zoom/pan and return to defaults</li>
+	    <li>Easy to save final image as a .png</li>
+	  </ul>
+	  </td>
+      </tr>
+    </table>
+
+    <b>Gallery of Examples</b>
+    <br><br>
+    <center>
+    <img src="ngc6820zoom.png" alt="zoom of ngc6820" width=140>
+    <img src="veilsouthzoom.png" alt="zoom of ngc6820" width=140>
+    <img src="ic4603.png" alt="zoom of ngc6820" width=140>
+    <img src="nc1499.png" alt="zoom of ngc6820" width=140>
+    </center>
+    <br>
+    For more information on how the MegaCam Colorizer works (under the hood), see the <a href="https://heatherflew.github.io/astro_outreach/poster/casca_poster.html"> 2021 CASCA Poster</a>
+    <br><p>
+    <!---
+    <b>Images used</b><br><br>
+    Veil Nebula South: r/g/u = 2296802p.fits, 2296586p.fits, 2296515p.fits
+<br>
+    NGC 7380: r/g/u = 2297034p.fits, 2296846p.fits, 2296839p.fits
+<br>
+    IC 4603: r/g/u = 2297008p.fits, 2297001p.fits, 2296994p.fits
+<br>
+    NGC 6820: r/g/u = 2300205p.fits, 2300219p.fits, 2300212p.fits
+<br>
+    NGC 1499: r/g/u = 2359986p.fits, 2359993p.fits, 2360526p.fits
+<br><br>
+   <br><b>All exposures available from CADC</b>
+    -->
+  </div>  
+  <div class="item4"><b>Extra Notes</b><br><br>
+    <table>
+      <tr><td>
+    <b>How to install</b><br>
+	<ul><li>No need to install anything, just use the github links at the bottom of the poster.</li>
+	  <li>GPL3 code - easy to fork and remix</li>
+    </ul>
+    <b>System Requirements (for the user)</b>
+    <ul>
+      <li>internet connection, and a web browser</li>
+      <li>works on phones, chromebooks, laptops, anything with a browser!</li>
+    </ul>
+	</td>
+	<td style="vertical-align:top"><b>Request</b>
+	  <br><br>
+	  Let Heather Flewelling (heather@cfht.hawaii.edu) know what you think!
+	  <br>
+	  <ul>
+	    <li>Requests for features</li>
+	    <li>If you find a bug</li>
+	    <li>If you use it with your students</li>
+	    <li>If you have an idea for a tool for your students</li>
+	    </ul>
+
+	</td>
+ </table>
+
+  </div>
+  <div class="item8">
+    <b>The ESPaDOnS Spectrum Viewer - easily check ESPaDOnS Spectra</b><br><br>
+    <img src="espadons_screenshot.png" alt="a screenshot of the espadons spectrum viewer" width=590><br>
+    <br>
+        <table style="width:100%">
+      <tr>
+	<td>
+    <b>How to use</b>
+    <ol>
+      <li>Load <b>Spectrum 1</b> or <b>Spectrum 2</b> files - choose either a subsample or subset</li>
+      <li>Use the <b>Plot Adjustment</b> tools to adjust scales, manually set axes, to choose which spectra to display, or to shift the positions of the spectra.</li>
+      <li>Use the <b>Analysis Tools</b> to add/hide Hydrogen lines, find local min/max, and/or add your own custom lines</li>
+      <li>Use the interactive plot to zoom/pan or save your plot as an image</li>
+    </ol>
+	</td>
+
+	</table>
+
+	<b>Need to convert a .fits file from the CADC to the required .s format?  No problem! We have a tool for that: <a href="https://www.cfht.hawaii.edu/~heather/espadons/espadonsfileconverter.php">https://www.cfht.hawaii.edu/~heather/espadons/espadonsfileconverter.php</a>
+	  </b>
+  </div>
+
+  
+  <div class="item7">
+    <b>Acknowlegements</b><br>
+ <br>Based on observations obtained with MegaPrime/MegaCam, a joint project of CFHT and CEA/DAPNIA, at the Canada-France-Hawaii Telescope (CFHT) which is operated by the National Research Council (NRC) of Canada, the Institut National des Sciences de l'Univers of the Centre National de la Recherche Scientifique (CNRS) of France, and the University of Hawaii. The observations at the CFHT were performed with care and respect from the summit of Maunakea which is a significant cultural and historic site.
+ This research used the facilities of the Canadian Astronomy Data Centre operated by the National Research Council of Canada with the support of the Canadian Space Agency.
+
+ 
+    
+  </div>
+  
+  <div class="item5">
+    <b>Links to the tools</b><br>
+    ESPaDOnS Spectrum Viewer: <a href="https://heatherflew.github.io/mks_espadons/espadonsviewer.html">https://heatherflew.github.io/mks_espadons/espadonsviewer.html</a>  Megacam Colorizer: <a href="https://heatherflew.github.io/astro_outreach/">https://heatherflew.github.io/astro_outreach/</a>, Pan-STARRS Colorizer: <a href="https://heatherflew.github.io/ps1astroday">https://heatherflew.github.io/ps1astroday</a><br><br>
+    <b>Links to the source code</b><br>
+    Megacam Colorizer source:<a href="https://github.com/heatherflew/astro_outreach">https://github.com/heatherflew/astro_outreach</a>,ESPaDOnS Spectrum Viewer source:<a href="https://github.com/heatherflew/mks_espadons">https://github.com/heatherflew/mks_espadons</a>
+
+  </div>
+</div>
+
+</body>
+</html>

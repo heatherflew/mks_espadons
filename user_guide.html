@@ -5,13 +5,30 @@
     body {
 	font-family: Sans-Serif;
     }
+    table, td, th {
+        border: 1px solid lightgray;
+        border-spacing: 2px;
+        font-size: 12px;
+    }
+    td {
+        text-align: left;
+        vertical-align: top;
+        font-size: 12px;
+    }
   </style>
 </head>
 
 
 <body>
-<h1>Espadons Spectrum Viewer - User Guide </h1>
+  <table style="border:none">
+    <tr style="border:none; height:30px;">
+      <td style="vertical-align:top;border:none">
+        <img src="cfht-blue-official_logo.gif" width="50px"></td>
+      <td style="vertical-align:top;border:none"><h1 style="color:blue; font-size:35px">ESPaDOnS Spectrum Viewer - User's Guide</h1><p>
+    </tr>
+  </table>
 
+  <p>
 This tool allows you to open .s files from Espadons, zoom/pan around to view the spectrum, and provides basic analysis tools as well.  This tool is designed to run in a web browser, so that the user does not need to install special astronomy software - it should work in any modern browser, and uses html5 and javascript.
 
 <h3>Contents</h3>
@@ -19,7 +36,7 @@ This tool allows you to open .s files from Espadons, zoom/pan around to view the
 <li><a href="#intro">Introduction</a></li>
 <li><a href="#open">Opening Files</a></li>
 <li><a href="#spectrumplot">The interactive spectrum plot</a></li>
-<li><a href="#plotparams">Choosing the plot parameters</a></li>
+<li><a href="#plotparams">Plot Adjustment Tools</a></li>
 <ul>
 <li><a href="#plotparamsautoscale">Auto Scale</a></li>
 <li><a href="#plotparamssetaxes">Manually Set axes ranges</a></li>
@@ -39,12 +56,13 @@ This tool allows you to open .s files from Espadons, zoom/pan around to view the
 </ul>
   <hr>
 
-
+<hr>
 <h3><a name="intro"></a>Introduction</h3>
 
 <h4>Espadons Instrument</h4>
 <h4>Espadons Data Products</h4>
 
+<hr>
 <h3><a name="open"></a>Opening Files</h3>
 
 The first step to using this tool is to open a file. There are 3 difference sources of files.
@@ -68,31 +86,49 @@ Once you chose the type (subsample or subset), and choose the .s file to load, i
 
 NOTE! If you change subsaple or subset, you will need to reload the file, this does not happen automatically.
 
-You can choose to load up to 2 spectrums (one in Spectrum 1, and another in Spectrum 2).
-
+You can choose to load up to 2 spectrums (one in <b>Spectrum 1</b>, and another in <b>Spectrum 2</b>).
+<hr>
 <h3><a name="spectrumplot">The interactive spectrum plot</a></h3>
 
 The interactive spectrum plot has a number of buttons available once you mouse over the plot. These buttons are located in the upper right of the plot, and they are:
 
-Save image
-Zoom
-Pan
-Box Select
-Lasso
-Zoom in
-Zoom out
-Auto scale
-Reset axes
-and a button giving more information about the plotly graphing utility.
-
+<ul>
+<li>Save image</li>
+<li>Zoom</li>
+<li>Pan</li>
+<li>Box Select</li>
+<li>Lasso</li>
+<li>Zoom in</li>
+<li>Zoom out</li>
+<li>Auto scale</li>
+<li>Reset axes</li>
+<li>and a button giving more information about the plotly graphing utility</li>
+</ul>
 Mousing over the points on the spectrum will give the x,y coordinates of the current point. You can also click and drag a box shape to zoom in to your area of interest.
+<hr>
+<h3><a name="plotparams">Plot Adjustment Tools</a></h3>
 
-<h3><a name="plotparams">Choosing the plot parameters</a></h3>
+There are several ways to adjust the plots using the Plot Ajustment tools.  The default settings are to auto scale the axes, to show the spectra, and to not adjust the spectra (not scaled or offset).  For the parameters that have text fields, there is a corresponding button below the text fields - plots are not redrawn until that button is clicked.
 
-There are several ways to adjust the plots using the Plot Ajustment tools.
+<h4><a name="plotparamsautoscale">Plot Adjustment Tools - Auto Scale</a></h4>
+This is the mode used for plots when first loaded.  The autoscales are chosen by plotly to fit all of the available data for both Spectrum 1 and Spectrum 2. Note that the edges of the data can have extreme values for the intensity, which will make it hard to see the more usuable wavelength ranges.  In general, this feature should be used to see the range of the data, but expect to use the tool to manually set the axes ranges to view the data better.
 
+<h4><a name="plotparamssetaxes">Plot Adjustment Tools - Manually Set axes ranges</a></h4>
 
+This has default values of 350nm to 1100nm for the x axis, and -0.5 to 5.0 for the y axis.  For most data, this gets the plot in the ball park (close, but not quite perfect).  You can adjust the values in the fields, and click "Update Plot" to redraw the plot.
 
+<h4><a name="plotparamsshowspectra">Plot Adjustment Tools - Show/Hide Spectra</a></h4>
+
+This has 2 buttons, one to toggle "Spectrum 1" on or off, and one to toggle "Spectrum 2" on or off.
+
+<h4><a name="plotparamsadjust">Plot Adjustment Tools - Adjust Spectrum</a></h4>
+
+This has fields to adjust the position and stretch for each of "Spectrum 1" and "Spectrum 2" - they can be adjusted individually.  The default values for both are to set the scale to 1 and the offset to 0.  The formula is:
+
+<p>
+  y(new) = y * scale + offset
+<p>
+  <hr>
 <h3><a name="analysis">Analysis Tools</a></h3>
 
 
@@ -107,7 +143,7 @@ There are several ways to adjust the plots using the Plot Ajustment tools.
 <h4><a name="analysisfwhm">Analysis Tools - calculate Full width Half Max/Min</a></h4>
 
 <h4><a name="analysisew">Analysis Tools - calculate equivalent Width</a></h4>
-
+<hr>
 <h3><a name="quirks">Known Quirks and Bugs</a></h3>
 
 
